@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+/// import React, { useState } from "react"; instructions never said to remove but i did see above made erros go buh bye
 import ProductList from "../components/ProductList";
 import CategoryMenu from "../components/CategoryMenu";
 
 const Home = () => {
-  const [currentCategory, setCategory] = useState("");
-
   return (
     <div className="container">
-      <CategoryMenu setCategory={setCategory} />
-      <ProductList currentCategory={currentCategory} />
+      <CategoryMenu />
+      <ProductList />
     </div>
   );
 };
