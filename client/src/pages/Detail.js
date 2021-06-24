@@ -6,6 +6,8 @@ import { useStoreContext } from "../utils/GlobalState";
 
 import { QUERY_PRODUCTS } from '../utils/queries';
 import spinner from '../assets/spinner.gif';
+// this is the indext db for offline use
+import { idbPromise  } from '../utils/helpers';
 
 import {
   REMOVE_FROM_CART,
@@ -50,15 +52,27 @@ function Detail() {
   };
 
   useEffect(() => {
+    // already in global store 
     if (products.length) {
       setCurrentProduct(products.find(product => product._id === id));
-    } else if (data) {
+    } 
+    // retrived from server
+    else if (data) {
       dispatch({
         type: UPDATE_PRODUCTS,
         products: data.products
       });
     }
-  }, [products, data, dispatch, id]);
+    // get cache from idb 
+    else if (!loading) {
+      idbPromise('products', 'get').then((indexedProducts) => { 
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          products: indexedProducts
+        });
+      });
+    }
+  }, [products, data, loading, dispatch, id]);
 
 
   return (
