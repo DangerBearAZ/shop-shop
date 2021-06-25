@@ -15,7 +15,7 @@ export function idbPromise(storeName, method, object) {
     let db, tx, store;
 
     // if version has changed (or if this is the first time using the database ), run this method and create the three object stores 
-    request.onupgradeneeded = function(e) {
+    request.onupgradeneeded = function (e) {
       const db = request.result;
       //create object store for each type of data and set "primary" key index to be the `_id` of the data
       db.createObjectStore('products', { keyPath: '_id' });
@@ -24,8 +24,9 @@ export function idbPromise(storeName, method, object) {
     };
     //handle any errors with connecting 
     request.onerror = function (e) {
-      console.log('There was an error')
+      console.log('There was an error');
     };
+
     // on database open success 
     request.onsuccess = function (e) {
       // save a reference of the database to the 'db' variable
