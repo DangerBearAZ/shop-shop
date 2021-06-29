@@ -1,11 +1,13 @@
 import React from 'react';
-import { useStoreContext } from '../../utils/GlobalState';
-import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
-import { idbPromise } from "../../utils/helpers"
+import { useStoreContext } from "../../utils/GlobalState";
+import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import { idbPromise } from "../../utils/helpers";
+
 
 
 const CartItem = ({ item }) => {
-  const[, dispatch] = useStoreContext();
+
+  const [, dispatch] = useStoreContext();
 
   const removeFromCart = item => {
     dispatch({
@@ -13,6 +15,7 @@ const CartItem = ({ item }) => {
       _id: item._id
     });
     idbPromise('cart', 'delete', { ...item });
+
   };
 
   // manually edit the quantity of shopping cart items by typing directly in the <input> elements
