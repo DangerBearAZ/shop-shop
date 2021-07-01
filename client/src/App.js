@@ -10,9 +10,13 @@ import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
-import { StoreProvider } from "./utils/GlobalState";
+ 
+import store from './state/store';
+import { Provider } from 'react-redux';
+
 import Success from "./pages/Success";
 import OrderHistory from "./pages/OrderHistory";
+
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -26,12 +30,15 @@ const client = new ApolloClient({
   uri: '/graphql',
 })
 
-function App() {
+
+
+function App(props) {
+  console.log(props)
   return (
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <StoreProvider>
+         <Provider store={store}>
             <Nav />
             <Switch>
               <Route exact path="/" component={Home} />
@@ -42,7 +49,7 @@ function App() {
               <Route exact path="/products/:id" component={Detail} />
               <Route component={NoMatch} />
             </Switch>
-          </StoreProvider>
+            </Provider>
         </div>
       </Router>
     </ApolloProvider>

@@ -1,11 +1,21 @@
-export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS"; 
-export const UPDATE_CATEGORIES = "UPDATE_CATEGORIES";
-export const UPDATE_CURRENT_CATEGORY = "UPDATE_CURRENT_CATEGORY";
+import {
+    UPDATE_PRODUCTS,
+    UPDATE_CATEGORIES,
+    UPDATE_CURRENT_CATEGORY,
+    ADD_TO_CART,
+    ADD_MULTIPLE_TO_CART,
+    REMOVE_FROM_CART,
+    UPDATE_CART_QUANTITY,
+    CLEAR_CART,
+    TOGGLE_CART
 
-// tests specifically for the cart 
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const ADD_MULTIPLE_TO_CART = 'ADD_MULTIPLE_TO_CART';
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-export const UPDATE_CART_QUANTITY = 'UPDATE_CART_QUANTITY';
-export const CLEAR_CART = 'CLEAR_CART';
-export const TOGGLE_CART = 'TOGGLE_CART';
+} from "./constants";
+
+export const addToCart = () => {
+    return 
+    {
+        product: { name: "test" }
+        type: ADD_TO_CART
+        
+    }
+}

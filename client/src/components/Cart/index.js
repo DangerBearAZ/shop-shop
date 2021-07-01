@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from '@apollo/react-hooks';
 import { QUERY_CHECKOUT } from "../../utils/queries"
-import { idbPromise } from "../../utils/helpers"
+// import { idbPromise } from "../../utils/helpers"
 import CartItem from "../CartItem";
 import Auth from "../../utils/auth";
 import { useStoreContext } from "../../utils/GlobalState";
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/actions";
+import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/constants";
 import "./style.css";
 
 
@@ -54,11 +54,12 @@ const Cart = () => {
   function submitCheckout() {
     const productIds = [];
 
-    state.cart.forEach((item) => {
-      for (let i = 0; i < item.purchaseQuantity; i++) {
-        productIds.push(item._id);
-      }
-    });
+    // replacing with reduct 
+    // state.cart.forEach((item) => {
+    //   for (let i = 0; i < item.purchaseQuantity; i++) {
+    //     productIds.push(item._id);
+    //   }
+    // });
 
     getCheckout({
       variables: { products: productIds }
