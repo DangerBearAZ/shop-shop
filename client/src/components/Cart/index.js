@@ -2,22 +2,26 @@ import React, { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from '@apollo/react-hooks';
 import { QUERY_CHECKOUT } from "../../utils/queries"
-// import { idbPromise } from "../../utils/helpers"
+import { idbPromise } from "../../utils/helpers"
 import CartItem from "../CartItem";
 import Auth from "../../utils/auth";
-import { useStoreContext } from "../../utils/GlobalState";
+// import { useStoreContext } from "../../utils/GlobalState";
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/constants";
 import "./style.css";
-
+//adding redux stuff 
+import { useSelector, useDispatch } from "react-redux";
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
-  const [state, dispatch] = useStoreContext();
+  const state = useSelector((state) => state);
+  //redux   
+  const dispatch = useDispatch();
   // The data variable will contain the checkout session, but only after the query is called with the getCheckout() function.
   const [getCheckout, { data}] = useLazyQuery(QUERY_CHECKOUT);
   // useeffect to check if there's anything in the states's property on load if not we will get data from indexDB cart object store
   
+ 
   useEffect(() => {
     if (data) {
       stripePromise.then((res) => {
@@ -54,12 +58,12 @@ const Cart = () => {
   function submitCheckout() {
     const productIds = [];
 
-    // replacing with reduct 
-    // state.cart.forEach((item) => {
-    //   for (let i = 0; i < item.purchaseQuantity; i++) {
-    //     productIds.push(item._id);
-    //   }
-    // });
+  
+    state.cart.forEach((item) => {
+      for (let i = 0; i < item.purchaseQuantity; i++) {
+        productIds.push(item._id);
+      }
+    });
 
     getCheckout({
       variables: { products: productIds }

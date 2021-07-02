@@ -9,7 +9,7 @@ const preloadedState = {
     products: [],
   };
   
-  function reducer(state = preloadedState, action) {
+  function rootReducer(state = preloadedState, action) {
     switch (action.type) {
       case "TOGGLE_CART":
         return {
@@ -80,6 +80,9 @@ const preloadedState = {
   }
 
 
-  const store = createStore(rootReducer, preloadedState);
+  const store = createStore(
+    rootReducer, preloadedState
+    +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
 
   export default store;

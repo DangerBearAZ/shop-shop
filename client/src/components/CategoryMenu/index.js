@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../../utils/constants';
 import { QUERY_CATEGORIES } from '../../utils/queries';
-// import { idbPromise } from '../../utils/helpers';
+import { idbPromise } from '../../utils/helpers';
+import { useSelector, useDispatch } from 'react-redux';
 
 function CategoryMenu() {
-  // being replaced by redux 
-  const [ state, dispatch] = useStoreContext();
-  
-  const { categories } = state;
+  const categories = useSelector((state) => state.categories);
+  const oldState = useSelector((state) => state);
+  const dispatch = useDispatch();
+  // const { categories } = state;
+  console.log('initialState', oldState);
+  console.log('categories', categories);
 
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
@@ -18,7 +19,7 @@ function CategoryMenu() {
     if (categoryData) {
       //execute our dispatch function with our action object indicating the type of action and the data to set our state for categories to
       dispatch({
-        type: UPDATE_CATEGORIES, 
+        type: 'UPDATE_CATEGORIES', 
         categories: categoryData.categories
       });
       categoryData.categories.forEach(category => {
@@ -27,7 +28,7 @@ function CategoryMenu() {
     } else if (!loading) {
       idbPromise('categories', 'get').then(categories => {
         dispatch({
-          type: UPDATE_CATEGORIES,
+          type: 'UPDATE_CATEGORIES',
           categories: categories
         });
       });
@@ -36,7 +37,7 @@ function CategoryMenu() {
 
   const handleClick = id => {
     dispatch({
-      type: UPDATE_CURRENT_CATEGORY,
+      type: 'UPDATE_CURRENT_CATEGORY',
       currentCategory: id
     });
   };
